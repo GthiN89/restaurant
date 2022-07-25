@@ -26,7 +26,7 @@ class AdminPanelController extends Controller
     {
         return view('backend.index');
     }
-    //admin panel Controller, contains categories, products and orders, restaurant menu has its own, settings in admin panel has its own
+    //admin panel Controller, contains categories, products and orders, restaurant menu has its own controller, settings in admin panel has its own controller
 
 
     //categories
