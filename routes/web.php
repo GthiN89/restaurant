@@ -61,9 +61,9 @@ Route::get('/admin/products/delete/{id}', [AdminPanelController::class, 'delete_
 
 //cart
 
-Route::get('cart', [CartController::class, 'cart'])->name('cart');
+Route::get('cart', [CartController::class, 'ShowCart'])->name('cart');
 
-Route::post('add_to_cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+Route::post('add_to_cart', [CartController::class, 'AddToCart'])->name('add_to_cart');
 
 Route::post('remove_from_cart', [CartController::class, 'remove_from_cart'])->name('remove_from_cart');
 
@@ -150,6 +150,6 @@ Route::post('admin/social/submit', [SettingsController::class, 'social_submit'])
 
 require __DIR__.'/auth.php';
 
-Auth::routes();
+
 
 
