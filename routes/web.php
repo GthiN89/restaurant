@@ -65,9 +65,9 @@ Route::get('cart', [CartController::class, 'ShowCart'])->name('cart');
 
 Route::post('add_to_cart', [CartController::class, 'AddToCart'])->name('add_to_cart');
 
-Route::post('remove_from_cart', [CartController::class, 'remove_from_cart'])->name('remove_from_cart');
+Route::post('remove_from_cart', [CartController::class, 'RemoveFromCart'])->name('remove_from_cart');
 
-Route::post('edit_product_quantity', [CartController::class, 'edit_product_quantity'])->name('edit_product_quantity');
+Route::post('edit_product_quantity', [CartController::class, 'EditProductQuantity'])->name('edit_product_quantity');
 
 Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 

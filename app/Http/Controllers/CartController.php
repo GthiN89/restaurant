@@ -32,93 +32,20 @@ class CartController extends Controller
         return redirect()->route('cart');
     }
 
-    public function remove_from_cart(Request $request){
-
-
-        if($request->session()->has('cart')){
-
-             $cart = $request->session()->get('cart');
-             $product_id = $request->input('id');
-
-             unset($cart[$product_id]);
-
-             $request->session()->put('cart',$cart);
-
-             $this->calculateTotalCart($request);
-
-        }
-
+    public function RemoveFromCart(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $this->CartService->SetRemoveFromCart($request);
         return redirect()->route('cart');
 
     }
 
-    public function edit_product_quantity(Request $request) {
-        $home = 0;
-        $contact = DB::table('contact')->get();
-        $social = DB::table('social')->get();
-        $hours = DB::table('hours')->get();
-        if($request->session()->has('cart')){
-
-            $product_id = $request->input('id');
-            $product_quantity = $request->input('quantity');
-
-
-            if($request->has('decrease_product_quantity_btn')){
-
-                $product_quantity = $product_quantity - 1;
-
-            }elseif ($request->has('increase_product_quantity_btn')) {
-
-                $product_quantity = $product_quantity + 1;
-
-            }
-
-
-            if($product_quantity <= 0){
-                $this->remove_from_cart($request);
-            }
-
-
-
-
-            $cart = $request->session()->get('cart');
-
-            if(array_key_exists($product_id, $cart)){
-                $cart[$product_id]['quantity'] = $product_quantity;
-
-                $request->session()->put('cart',$cart);
-
-                $this->calculateTotalCart($request);
-
-
-            }
-
-        }
-
-        return view('cart', compact('home', 'contact', 'social', 'hours'));
+    public function EditProductQuantity(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $this->CartService->SetEditProductQuantity($request);
+        return redirect()->route('cart');
     }
 
-    public function calculateTotalCart(Request $request) {
-        $cart = $request->session()->get('cart');
-        $total_price = 0;
-        $total_quantity = 0;
 
-        foreach($cart as $id => $product){
-            $product = $cart[$id];
-            $price = $product['price'];
-            $quantity = $product['quantity'];
-
-            $total_price = $total_price + ($price * $quantity);
-            $total_quantity = $total_quantity + $quantity;
-
-        }
-
-        $request->session()->put('total', $total_price);
-        $request->session()->put('quantity', $total_quantity);
-
-
-
-    }
 
     public function checkout() {
         $home = 0;

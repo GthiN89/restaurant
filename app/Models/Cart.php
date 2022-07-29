@@ -102,5 +102,60 @@ class Cart {
         $this->calculateTotalCart($request);
     }
 
+    public function RemoveFromCard($request) {
+        if($request->session()->has('cart')){
+
+            $cart = $request->session()->get('cart');
+            $product_id = $request->input('id');
+
+            unset($cart[$product_id]);
+
+            $request->session()->put('cart',$cart);
+
+            $this->calculateTotalCart($request);
+
+        }
+    }
+
+    public function EditProductQuantity($request) {
+
+        if($request->session()->has('cart')){
+
+            $product_id = $request->input('id');
+            $product_quantity = $request->input('quantity');
+
+
+            if($request->has('decrease_product_quantity_btn')){
+
+                $product_quantity = $product_quantity - 1;
+
+            }elseif ($request->has('increase_product_quantity_btn')) {
+
+                $product_quantity = $product_quantity + 1;
+
+            }
+
+
+            if($product_quantity <= 0){
+                $this->remove_from_cart($request);
+            }
+
+
+
+
+            $cart = $request->session()->get('cart');
+
+            if(array_key_exists($product_id, $cart)){
+                $cart[$product_id]['quantity'] = $product_quantity;
+
+                $request->session()->put('cart',$cart);
+
+                $this->calculateTotalCart($request);
+
+
+            }
+
+        }
+    }
 
 }

@@ -21,7 +21,12 @@ class CartService {
         $this->Cart->AddToCard($request);
     }
 
-
+    public function SetRemoveFromCart($request) {
+        $this->Cart->RemoveFromCard($request);
+}
+    public function SetEditProductQuantity($request) {
+        $this->Cart->EditProductQuantity($request);
+    }
 
 
 }
